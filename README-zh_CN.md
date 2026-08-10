@@ -24,6 +24,7 @@
 - [如何更新键位映射](https://nxtkb.com/zh/docs/setup/keymap/how-to-update-keymaps/)
 - [如何刷写固件](https://nxtkb.com/zh/docs/firmware/how-to-flash-a-firmware/)
 - [键鼠测试](https://nxtkb.com/zh/docs/setup/keymap/input-tester/)
+- [在 Ferris Sweep 上使用 Codex Micro](https://nxtkb.com/zh/blog/codex-micro-chatgpt-protocol/)
 
 英文文档也可直接访问：
 
@@ -65,6 +66,17 @@
 完整取舍请看官网的
 [如何更新键位映射](https://nxtkb.com/zh/docs/setup/keymap/how-to-update-keymaps/)。
 
+### Codex Micro 构建
+
+公开的 `zmk-feature-codex-micro` 模块已经以固定 commit 加入 `config/west.yml`。默认
+GitHub Actions workflow 会为左手构建同时支持 USB 和蓝牙 Codex 的固件，右手仍构建为
+普通 split peripheral。
+
+workflow 会在编译前通过 `west patch` 显式应用模块声明的官方 ZMK 兼容补丁；
+`west update` 和 `west build` 本身不会自动应用 Zephyr module patch。本地使用 west 管理的
+workspace 时，也应先执行一次 `west patch -sm zmk-feature-codex-micro apply`。NXTKB 本地
+实验室身份不会进入公开模块；使用该身份生成的 UF2 不得公开发布或出货。
+
 ## 键位摘要
 
 完整键位图和逐层说明请看官网：
@@ -75,12 +87,15 @@
 
 当前默认层级：
 
-- 默认层 / Windows 层：输入字符，并在本位行放置修饰键。
+- 默认层：输入字符，并在本位行放置修饰键。
 - 数字和导航层：按住右侧 `TAB` 层键进入。
 - 符号层：按住左侧 `TAB` 层键进入。
 - 功能层：同时按住左右 `TAB` 层键进入，用于蓝牙档位、输出切换、
-  Windows 层切换、ZMK Studio 解锁和软关机。
+  进入 Codex 层、ZMK Studio 解锁和软关机。
 - 鼠标层：在符号层按 `SPACE` 进入，按 `P` 或 `Q` 退出。
+- Codex 层：在功能层按 `I` 进入；`Q`–`Y` 对应 Agent 1–6，
+  `A`/`S`/`D`/`F` 对应批准/分叉/拒绝/Fast，`H`/`J` 对应语音/发送，
+  按 `P` 退出。
 
 ## Bootloader 和刷写提示
 

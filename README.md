@@ -25,6 +25,7 @@ public NXTKB docs.
 - [How to Update Keymaps](https://nxtkb.com/docs/setup/keymap/how-to-update-keymaps/)
 - [How to Flash Firmware](https://nxtkb.com/docs/firmware/how-to-flash-a-firmware/)
 - [Keyboard & Mouse Test](https://nxtkb.com/docs/setup/keymap/input-tester/)
+- [Using Codex Micro on Ferris Sweep](https://nxtkb.com/blog/codex-micro-chatgpt-protocol/)
 
 Chinese docs are also available:
 
@@ -67,6 +68,21 @@ For quick keymap edits, use [ZMK Studio](https://zmk.studio/) when this
 firmware supports it. For the full decision guide, see
 [How to Update Keymaps](https://nxtkb.com/docs/setup/keymap/how-to-update-keymaps/).
 
+### Codex Micro build
+
+The keymap includes a conditional Codex layer for the left half. The public
+`zmk-feature-codex-micro` module is pinned in `config/west.yml`. The default
+GitHub Actions workflow builds the left firmware with USB and Bluetooth Codex
+transports and builds the right half as a normal split peripheral.
+
+The workflow explicitly applies the module's official-ZMK compatibility
+patch through `west patch` before compiling; `west update` and `west build` do
+not apply Zephyr module patches on their own. For local west-managed builds, run
+`west patch -sm zmk-feature-codex-micro apply` once before building. The right
+half continues to use the normal firmware. NXTKB's local lab identity is
+intentionally excluded from the module repository; firmware built with it must
+not be published or shipped.
+
 ## Keymap Summary
 
 The complete diagrams and layer-by-layer explanations live on the website:
@@ -77,13 +93,16 @@ The complete diagrams and layer-by-layer explanations live on the website:
 
 Current default layers:
 
-- Default / Windows layer: character input with home-row modifiers.
+- Default layer: character input with home-row modifiers.
 - Numbers and navigation layer: hold the right `TAB` layer key.
 - Symbols layer: hold the left `TAB` layer key.
 - Function layer: hold both `TAB` layer keys for Bluetooth profiles, output
-  switching, Windows-layer toggle, ZMK Studio unlock, and soft off.
+  switching, Codex layer entry, ZMK Studio unlock, and soft off.
 - Mouse layer: enter from the symbols layer with `SPACE`, then leave with `P`
   or `Q`.
+- Codex layer: enter with `I` on the function layer; use `Q`–`Y` for Agents
+  1–6, `A`/`S`/`D`/`F` for Approve/Split/Decline/Fast, `H`/`J` for
+  Voice/Send, and `P` to exit.
 
 ## Bootloader and Flashing Notes
 
