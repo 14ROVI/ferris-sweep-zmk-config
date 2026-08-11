@@ -9,8 +9,11 @@ manifest:
   projects:
     - name: zmk
       remote: zmkfirmware
-      revision: 8feeb52
+      revision: 8feeb52eafc716c1697cfe0515e98b78281c3543
       import: app/west.yml
+    - name: zmk-feature-codex-micro
+      remote: nxtkb
+      revision: 034050c6cac7834b5004aad510863e7c999f6307
     - name: zmk-behavior-report
       remote: nxtkb
       revision: 476f43da1f98b4a6150c9c0e499a257bd64a29a0
