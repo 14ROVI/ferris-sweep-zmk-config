@@ -79,9 +79,11 @@ The workflow explicitly applies the module's official-ZMK compatibility
 patch through `west patch` before compiling; `west update` and `west build` do
 not apply Zephyr module patches on their own. For local west-managed builds, run
 `west patch -sm zmk-feature-codex-micro apply` once before building. The right
-half continues to use the normal firmware. NXTKB's local lab identity is
-intentionally excluded from the module repository; firmware built with it must
-not be published or shipped.
+half continues to use the normal firmware. Release builds enable the module's
+minimal compatibility identity, which changes only USB VID/PID and Bluetooth
+PnP VID/PID; user-visible keyboard names remain configurable. These identifiers
+do not imply OpenAI certification, and the undocumented discovery behavior may
+change in future ChatGPT releases.
 
 ## Keymap Summary
 
