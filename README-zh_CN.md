@@ -74,8 +74,9 @@ GitHub Actions workflow 会为左手构建同时支持 USB 和蓝牙 Codex 的�
 
 workflow 会在编译前通过 `west patch` 显式应用模块声明的官方 ZMK 兼容补丁；
 `west update` 和 `west build` 本身不会自动应用 Zephyr module patch。本地使用 west 管理的
-workspace 时，也应先执行一次 `west patch -sm zmk-feature-codex-micro apply`。NXTKB 本地
-实验室身份不会进入公开模块；使用该身份生成的 UF2 不得公开发布或出货。
+workspace 时，也应先执行一次 `west patch -sm zmk-feature-codex-micro apply`。发布固件会启用
+模块的最小兼容身份，只修改 USB VID/PID 和蓝牙 PnP VID/PID；用户可见的键盘名称仍可配置。
+这些标识符不代表 OpenAI 认证，且 ChatGPT 未公开的发现机制未来可能变化。
 
 ## 键位摘要
 
